@@ -25,14 +25,17 @@ public class Trip {
     private String departure;
     private String destination;
     private LocalDate departureDate;
-    private LocalDate arrivaleDate;
+    private LocalDate arrivalDate;
     private LocalTime departureTime;
-    private LocalTime arrivaleTime;
+    private LocalTime arrivalTime;
     private int numberOfPassengers;
     @Enumerated(EnumType.STRING)
     private VehiculeType vehiculeType;
     @ManyToOne
     @JoinColumn(name="matricule")
     private Driver driver;
+    @ManyToOne
+    @JoinColumn(name = "id")
+    private Vehicule vehicule;
 
 }

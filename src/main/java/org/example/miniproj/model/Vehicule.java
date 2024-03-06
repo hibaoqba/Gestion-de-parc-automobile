@@ -14,8 +14,9 @@ import jakarta.persistence.*;
 @Table(name="vehicule")
 public class Vehicule {
     @Id
-    private String identifiantUnique;
+    private String id;
     private String marque;
+    private String modele;
     @Enumerated(EnumType.STRING)
     private VehiculeType typeVehicule;
     private int kilometrage;
