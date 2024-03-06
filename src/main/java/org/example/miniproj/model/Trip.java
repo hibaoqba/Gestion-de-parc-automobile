@@ -35,7 +35,7 @@ public class Trip {
     @JoinColumn(name="matricule")
     private Driver driver;
     @ManyToOne
-    @JoinColumn(name = "id")
+    @JoinColumn(name = "id_vehicule")
     private Vehicule vehicule;
 
 }
