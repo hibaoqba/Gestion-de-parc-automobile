@@ -14,6 +14,7 @@ import jakarta.persistence.*;
 @Table(name="vehicule")
 public class Vehicule {
     @Id
+    @GeneratedValue
     private String id;
     private String marque;
     private String modele;
