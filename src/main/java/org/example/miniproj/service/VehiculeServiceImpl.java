@@ -12,9 +12,9 @@ import java.util.Optional;
 public class VehiculeServiceImpl implements VehiculeService{
     @Autowired
     private VehiculeRepository vehiculeRepository;
-
     @Override
     public Vehicule saveVehicule(Vehicule vehicule) {
+
         return vehiculeRepository.save(vehicule);
     }
 
@@ -26,11 +26,13 @@ public class VehiculeServiceImpl implements VehiculeService{
 
     @Override
     public List<Vehicule> getAllVehicules() {
+
         return vehiculeRepository.findAll();
     }
 
     @Override
     public void deleteVehiculeById(String id) {
+
         vehiculeRepository.deleteById(id);
     }
 }
