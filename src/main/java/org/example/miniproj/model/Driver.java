@@ -1,15 +1,14 @@
 package org.example.miniproj.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @Builder
@@ -19,8 +18,7 @@ import java.time.LocalDate;
 @Table(name="driver")
 public class Driver {
     @Id
-    @GeneratedValue
-    private int matricule;
+    private String matricule;
     private String prenom;
     private String nom;
     private LocalDate dateNaissance;
@@ -28,4 +26,6 @@ public class Driver {
     private String numeroPermis;
     private LocalDate dateDelivrancePermis;
     private String typePermis;
+    @OneToMany(mappedBy = "driver")
+    private List<Trip> trips = new ArrayList<>();
 }

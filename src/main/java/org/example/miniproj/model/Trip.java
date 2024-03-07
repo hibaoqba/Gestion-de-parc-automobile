@@ -21,7 +21,6 @@ public class Trip {
     @Id
     @GeneratedValue
     private Integer id;
-
     private String departure;
     private String destination;
     private LocalDate departureDate;
