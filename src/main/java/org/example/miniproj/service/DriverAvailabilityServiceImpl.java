@@ -1,30 +1,56 @@
 package org.example.miniproj.service;
 
 import org.example.miniproj.model.Driver;
+import org.example.miniproj.model.Trip;
+import org.example.miniproj.repository.DriverRepository;
+import org.example.miniproj.repository.TripRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class DriverAvailabilityServiceImpl implements DriverAvailabilityService {
+    @Autowired
+    private DriverRepository driverRepository;
 
     @Autowired
-    private DriverService driverService;
-
+    private TripRepository tripRepository;
     @Override
-    public List<Driver> getAllAvailableDrivers() {
-        // Implement the logic to retrieve all available drivers
-        // For example, you can retrieve all drivers and filter out the ones that are not available
-        return driverService.getAllDrivers(); // Assuming getAllDrivers() returns a list of all drivers
+    public boolean isDriverAvailable(String driverId, LocalDate startDate, LocalDate endDate) {
+        Driver driver = driverRepository.getById(driverId);
+        List<Trip> trips = driver.getTrips();
+        for (Trip trip : trips) {
+            LocalDate tripStartDate = trip.getDepartureDate();
+            LocalDate tripEndDate = trip.getArrivalDate();
+            if ((tripStartDate.isBefore(endDate) || tripStartDate.isEqual(endDate)) &&
+                    (tripEndDate.isAfter(startDate) || tripEndDate.isEqual(startDate))) {
+                return false;
+            }
+            if (tripStartDate.isAfter(startDate) && tripEndDate.isBefore(endDate)) {
+                return false;
+            }
+            if (tripStartDate.isBefore(startDate) && (tripEndDate.isAfter(startDate) || tripEndDate.isEqual(startDate))) {
+                return false;
+            }
+            if ((tripStartDate.isBefore(endDate) || tripStartDate.isEqual(endDate)) && tripEndDate.isAfter(endDate)) {
+                return false;
+            }
+        }
+        return true;
+    }
+    @Override
+    public List<Driver> getAllAvailableDrivers(LocalDate startDate, LocalDate endDate) {
+        List<Driver> allDrivers = driverRepository.findAll();
+        List<Driver> availableDrivers = new ArrayList<>();
+        for (Driver driver : allDrivers) {
+            if (isDriverAvailable(driver.getMatricule(), startDate, endDate)) {
+                availableDrivers.add(driver);
+            }
+        }
+        return availableDrivers;
     }
 
-    @Override
-    public boolean isDriverAvailable(String driverId) {
-        // Implement the logic to check if a driver with the given ID is available
-        // For example, you can retrieve the driver by ID and check their availability status
-        return driverService.getDriverById(driverId)
-                .map(Driver::isAvailable) // Assuming Driver class has a method isAvailable() to check availability
-                .orElse(false); // If the driver is not found, consider them unavailable
-    }
 }
