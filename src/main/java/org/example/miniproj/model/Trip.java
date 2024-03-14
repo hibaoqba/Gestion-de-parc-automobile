@@ -28,6 +28,7 @@ public class Trip {
     private LocalTime departureTime;
     private LocalTime arrivalTime;
     private int numberOfPassengers;
+    private String otherDetails;
     @Enumerated(EnumType.STRING)
     private VehiculeType vehiculeType;
     @ManyToOne

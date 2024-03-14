@@ -21,6 +21,9 @@ public class DriverAvailabilityServiceImpl implements DriverAvailabilityService 
     @Override
     public boolean isDriverAvailable(String driverId, LocalDate startDate, LocalDate endDate) {
         Driver driver = driverRepository.findById(driverId).orElse(null);
+        if (driver == null) {
+            return false;
+        }
         List<Trip> trips = driver.getTrips();
         for (Trip trip : trips) {
             LocalDate tripStartDate = trip.getDepartureDate();
