@@ -20,7 +20,7 @@ public class DriverAvailabilityServiceImpl implements DriverAvailabilityService 
     private TripRepository tripRepository;
     @Override
     public boolean isDriverAvailable(String driverId, LocalDate startDate, LocalDate endDate) {
-        Driver driver = driverRepository.getById(driverId);
+        Driver driver = driverRepository.findById(driverId).orElse(null);
         List<Trip> trips = driver.getTrips();
         for (Trip trip : trips) {
             LocalDate tripStartDate = trip.getDepartureDate();
@@ -29,15 +29,7 @@ public class DriverAvailabilityServiceImpl implements DriverAvailabilityService 
                     (tripEndDate.isAfter(startDate) || tripEndDate.isEqual(startDate))) {
                 return false;
             }
-            if (tripStartDate.isAfter(startDate) && tripEndDate.isBefore(endDate)) {
-                return false;
-            }
-            if (tripStartDate.isBefore(startDate) && (tripEndDate.isAfter(startDate) || tripEndDate.isEqual(startDate))) {
-                return false;
-            }
-            if ((tripStartDate.isBefore(endDate) || tripStartDate.isEqual(endDate)) && tripEndDate.isAfter(endDate)) {
-                return false;
-            }
+
         }
         return true;
     }
