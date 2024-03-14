@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class DriverAvailabilityServiceImpl implements DriverAvailabilityService {
@@ -25,27 +26,17 @@ public class DriverAvailabilityServiceImpl implements DriverAvailabilityService 
             return false;
         }
         List<Trip> trips = driver.getTrips();
-        for (Trip trip : trips) {
-            LocalDate tripStartDate = trip.getDepartureDate();
-            LocalDate tripEndDate = trip.getArrivalDate();
-            if ((tripStartDate.isBefore(endDate) || tripStartDate.isEqual(endDate)) &&
-                    (tripEndDate.isAfter(startDate) || tripEndDate.isEqual(startDate))) {
-                return false;
-            }
-
-        }
-        return true;
+        return trips.stream()
+                .filter(trip -> (trip.getDepartureDate().isBefore(endDate) || trip.getDepartureDate().isEqual(endDate)) &&
+                        (trip.getArrivalDate().isAfter(startDate) || trip.getArrivalDate().isEqual(startDate)))
+                .findFirst()
+                .isEmpty();
     }
     @Override
     public List<Driver> getAllAvailableDrivers(LocalDate startDate, LocalDate endDate) {
-        List<Driver> allDrivers = driverRepository.findAll();
-        List<Driver> availableDrivers = new ArrayList<>();
-        for (Driver driver : allDrivers) {
-            if (isDriverAvailable(driver.getMatricule(), startDate, endDate)) {
-                availableDrivers.add(driver);
-            }
-        }
-        return availableDrivers;
+        return driverRepository.findAll().stream()
+                .filter(driver -> isDriverAvailable(driver.getMatricule(), startDate, endDate))
+                .collect(Collectors.toList());
     }
 
 }
