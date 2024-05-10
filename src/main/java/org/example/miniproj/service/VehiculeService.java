@@ -9,4 +9,5 @@ public interface VehiculeService {
     Vehicule getVehiculeById(String id);
     List<Vehicule> getAllVehicules();
     void deleteVehiculeById(String id);
+
 }
