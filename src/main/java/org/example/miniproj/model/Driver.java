@@ -23,9 +23,8 @@ public class Driver {
     private String nom;
     private LocalDate dateNaissance;
     private String cin;
-    private String numeroPermis;
-    private LocalDate dateDelivrancePermis;
-    private String typePermis;
+    @OneToOne
+    private Permis permis;
     @OneToMany(mappedBy = "driver")
     private List<Trip> trips = new ArrayList<>();
 }
