@@ -1,6 +1,7 @@
 package org.example.miniproj.service;
 
 import org.example.miniproj.model.Driver;
+import org.example.miniproj.model.Vehicule;
 import org.example.miniproj.repository.DriverRepository;
 import org.example.miniproj.repository.VehiculeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,8 +12,8 @@ import java.util.List;
 
 @Service
 public interface VehiculeAvailabilityService {
-    List<Driver> getAllAvailableVehicules(LocalDate startDate, LocalDate endDate );
-    boolean isVehiculeAvailable(String driverId,LocalDate startDate, LocalDate endDate);
+    List<Vehicule> getAllAvailableVehicules(LocalDate startDate, LocalDate endDate );
+    boolean isVehiculeAvailable(Integer vehiculeId,LocalDate startDate, LocalDate endDate);
 
 
 }
