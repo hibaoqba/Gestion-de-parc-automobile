@@ -19,7 +19,7 @@ public class VehiculeServiceImpl implements VehiculeService{
     }
 
     @Override
-    public Vehicule getVehiculeById(String id) {
+    public Vehicule getVehiculeById(Integer id) {
         Optional<Vehicule> optionalVehicule = vehiculeRepository.findById(id);
         return optionalVehicule.orElse(null);
     }
@@ -31,7 +31,7 @@ public class VehiculeServiceImpl implements VehiculeService{
     }
 
     @Override
-    public void deleteVehiculeById(String id) {
+    public void deleteVehiculeById(Integer id) {
 
         vehiculeRepository.deleteById(id);
     }

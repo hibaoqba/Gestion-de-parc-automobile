@@ -18,7 +18,7 @@ import java.util.List;
 public class Vehicule {
     @Id
     @GeneratedValue
-    private String id;
+    private Integer id;
     private String marque;
     private String modele;
     @Enumerated(EnumType.STRING)
