@@ -5,6 +5,9 @@ import jakarta.persistence.Table;
 import lombok.*;
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Getter
 @Setter
 @Builder
@@ -15,7 +18,7 @@ import jakarta.persistence.*;
 public class Vehicule {
     @Id
     @GeneratedValue
-    private Integer id;
+    private String id;
     private String marque;
     private String modele;
     @Enumerated(EnumType.STRING)
@@ -23,4 +26,6 @@ public class Vehicule {
     private int kilometrage;
     private boolean disponibilite;
     private String typePermisRequis;
+    @OneToMany(mappedBy = "vehicule")
+    private List<Trip> trips = new ArrayList<>();
 }

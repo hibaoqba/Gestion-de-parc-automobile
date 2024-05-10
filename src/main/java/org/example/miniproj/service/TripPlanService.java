@@ -13,9 +13,7 @@ public class TripPlanService {
     private TripRepository tripRepository;
 
     public void registerTrip(TripRequestDTO tripRequestDTO) {
-        // Perform validation and business logic checks here
-        // Example:
-        Trip trip = Trip.builder()
+                Trip trip = Trip.builder()
                 .departureDate(tripRequestDTO.getDepartureDate())
                 .departureTime(tripRequestDTO.getDepartureTime())
                 .arrivalDate(tripRequestDTO.getArrivalDate())
@@ -26,7 +24,6 @@ public class TripPlanService {
                 .numberOfPassengers(tripRequestDTO.getNumberOfPassengers())
                 .otherDetails(tripRequestDTO.getOtherDetails())
                 .build();
-        // Save trip in repository
         tripRepository.save(trip);
     }
 
